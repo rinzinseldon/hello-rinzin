@@ -11,18 +11,17 @@
 The purpose of this SRS is to define the requirements for the Office Inventory Dashboard at SELISE, a web application designed to streamline the procurement and management of office supplies. The intended readership includes developers, testers, and the project stakeholders.
 
 ### 1.2 · Scope of the Product
-- **Product name:** Office Inventory Dashboard
+- **Product name:** Web-Based SELISE Office Inventory Dashboard System
 - 
 - **What the product will do:** The system will facilitate a request-approval workflow between employees and administrators, while providing real-time inventory tracking and generate reports on Office Inventory.
 - 
 - **What the product will NOT do:** This system does not include direct purchase order generation to external vendors or financial payment processing.
 - 
-- **Benefits / goals:** `<It will rassit in reducing manual administrative overhead and in improving stock visibility to all the user .>`
+- **Benefits / goals:** It will assit in reducing manual administrative overhead and in improving stock visibility to all the user 
 - 
-- **Applicability:** `<Office staff (employees) for supply requests and Admin staff for inventory management.>`
+- **Applicability:** Office staff (employees) for supply requests and Admin staff for inventory management.
 
 ### 1.3 · Definitions, Acronyms, Abbreviations
-| Term | Meaning |
 | SRS | Software Requirements Specification |
 | UI | User Interface |
 
@@ -59,19 +58,23 @@ FR-07 · Customer Suggestions Module
 •	Processing: The dashboard will provide suggestion cards with upvote/downvote capabilities and a highlighted section for popular requests.
 •	Admin Control: The dashboard will provide functionality for admins to manage suggestions by marking them as "Implemented" or "Under Review".
 •	Priority: Could
->`
+
 - **User interfaces:** External Interface Requirements
 3.1.1 · User Interfaces
 •	The dashboard will provide navigation via a central bar containing links for Home, Requests, Inventory, Reports, and Settings.
 •	UI standards require adaptive grid layouts for tablets and desktops.
+
 3.2 · Functional Requirements
+
 FR-01 · User Dashboard Interface
 •	Description: The User Dashboard will provide an intuitive, card-based layout to clearly display request statuses.
 •	Priority: Must
+
 FR-02 · Request Submission
 •	Description: The User Dashboard will provide a request submission form with fields for item name, quantity, purpose, and urgency level.
 •	Processing: The system will provide automation by auto-filling user details, including name, department, and email.
 •	Priority: Must
+
 FR-03 · Request Tracking & Notifications
 •	Description: The User Dashboard will provide tracking and notification features, allowing users to view the status of requests (Pending, Approved, Rejected) and access a history of all past requests.
 •	Priority: Must
@@ -86,21 +89,23 @@ FR-03 · Request Tracking & Notifications
 Optional printer support for order reports
 No specialized hardware required>`
 
-- **Communication interfaces:** `<Standard user devices (desktop, laptop, tablet)
-Optional printer support for order reports
-No specialized hardware required>`
+- **Communication interfaces:** 
+-Optional printer support for order reports
+No specialized hardware required
 
-- **Memory / storage constraints:** `<Standard user devices (desktop, laptop, tablet)
-Optional printer support for order reports
-No specialized hardware required>`
+- **Memory / storage constraints:** `
+-Optional printer support for order reports
+-No specialized hardware required
 
-- **Operations:** `<Normal mode: Full functionality available
-Degraded mode: Limited access during server issues
-Maintenance mode: System temporarily unavailable for updates>`
+- **Operations:** `
+- Normal mode: Full functionality available
+-Degraded mode: Limited access during server issues
+-Maintenance mode: System temporarily unavailable for updates
 
-- **Site adaptation:** `<Configurable per organization
-Custom user roles and permissions
-Adjustable inventory categories>`
+- **Site adaptation:**
+- Configurable per organization
+-Custom user roles and permissions
+-Adjustable inventory categories
 
 ### 2.2 · Product Functions
 The Office Management Dashboard is designed to streamline office supply management by allowing employees to request items and managers to control approvals. The system centralizes ordering, inventory tracking, and reporting.
@@ -110,9 +115,9 @@ Key functions include user authentication, supply request submission, approval w
 ### 2.3 · User Characteristics
 
 | User Class | Description | Expertise | Frequency |
-| `<admin>` | `<Manages users, inventory, and system settings>` | Expert | Daily |
-| `<employee>` | `<Requests office supplies>` | Novice | Weekly |
-| `<Manager>` | `<Reviews and approves/rejects requests>` | Intermediate | Daily |
+| admin| Manages users, inventory, and system settings | Expert | Daily |
+| employee| Requests office supplies| Novice | Weekly |
+| Manager | Reviews and approves/rejects requests | Intermediate | Daily |
 
 ### 2.4 · Constraints
 
@@ -186,7 +191,7 @@ Priority: Must
 
 
 ### 3.3 · Non-Functional Requirements
-Performance Requirements
+3.3.1 Performance Requirements
 Supports up to 200 concurrent users
 Response time < 2 seconds
 System handles multiple requests simultaneously
@@ -202,8 +207,8 @@ Data encryption (HTTPS)
 Audit logs for all actions
 
 #### 3.3.1 · Performance Requirements
-- `<static: number of users · records · transactions>`
-- `<dynamic: throughput · response time · p95 / p99 latency>`
+- static: number of users · records · transactions
+- dynamic: throughput · response time · p95 / p99 latency
 - **Measurable, testable.**
 
 #### 3.3.2 · Safety Requirements
@@ -218,12 +223,12 @@ Requirements to prevent loss, damage, or harm. Often tied to standards (IEC 6150
 
 #### 3.3.4 · Software Quality Attributes
 | Attribute | Requirement |
-| Reliability | `<System minimizes failures>` |
-| Availability | `<99% uptime>` |
-| Maintainability | `<Modular code structure>` |
-| Portability | `<Runs on major browsers>` |
-| Usability | `<Easy to learn interface>` |
-| Accessibility | `<Basic accessibility support>` |
+| Reliability | System minimizes failures |
+| Availability | 99% uptime |
+| Maintainability | Modular code structure |
+| Portability | Runs on major browsers |
+| Usability | Easy to learn interface |
+| Accessibility | Basic accessibility support |
 
 #### 3.3.5 · Business Rules
 -Only managers/Admin can approve requests
@@ -262,10 +267,10 @@ Functional requirements: FR-04
 ## § 04 · Verification
 
 | Req ID | Verification Method | Acceptance Criterion |
-| FR-01 | Test | `<User logs in successfully>` |
-| FR-02 | Test | `<Order is submitted>` |
-| FR-03 | Demostration | `<Manager updates status>` |
-| FR-04| Inspection | `<Inventory updates correctly>` |
+| FR-01 | Test | User logs in successfully |
+| FR-02 | Test | Order is submitted|
+| FR-03 | Demostration | Manager updates status |
+| FR-04| Inspection | Inventory updates correctly|
 
 **Methods:** Test · Demonstration · Inspection · Analysis (T/D/I/A).
 
