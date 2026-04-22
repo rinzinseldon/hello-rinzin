@@ -312,3 +312,70 @@ Admin: System administrator
 | Customer Representative   |           |           |      |
 
 
+---
+
+## § 03 · Specific Requirements
+
+
+
+### 3.2 · Functional Requirements (FR)
+
+
+
+#### 3.2.1 · Authentication Module (Login)
+* **FR-AUTH-01 (Credential Validation):** The system shall intercept user login attempts and validate the provided email/username and password against the securely hashed database records.
+* **FR-AUTH-02 (Session Management):** Upon successful authentication, the system shall generate a JSON Web Token (JWT) containing the user's unique ID and role-based permissions (Admin/User), which must be stored in secure, HttpOnly cookies or local storage for the duration of the session.
+* **FR-AUTH-03 (Role-Based Redirection):** The system shall parse the role claim from the JWT and automatically redirect the user to either the `/admin-dashboard` or the `/user-inventory-view` upon successful login.
+* **FR-AUTH-04 (Brute Force Protection):** The system shall implement a lockout mechanism that disables the login input field for a duration of 15 minutes after 5 consecutive failed authentication attempts to prevent automated password attacks.
+
+#### 3.2.2 · User View Module (Inventory Operations)
+* **FR-USER-01 (Read-Only Access):** The system shall fetch the complete inventory list via a secure `GET` request and render it in a read-only table format that strictly prohibits modification of data.
+* **FR-USER-02 (Dynamic Search/Filtering):** The system shall provide a search bar that enables real-time, case-insensitive filtering of inventory items by "Item Name," "SKU," or "Category" as the user types, ensuring the table updates instantaneously without requiring a page refresh.
+* **FR-USER-03 (Low-Stock Alerting):** The system shall identify items where the `quantity` attribute is below the established threshold (e.g., < 5) and visually distinguish these rows by applying a high-contrast red indicator or CSS class for immediate visibility.
+* **FR-USER-04 (Report Exporting):** The system shall provide a "Download CSV" functionality that captures the current table state—inclusive of applied filters—and converts the data into a downloadable CSV file.
+
+#### 3.2.3 · Admin View Module (Management)
+* **FR-ADMIN-01 (Full CRUD Interface):** The system shall provide authorized administrators with an interface to execute Create (Add Item), Read (View List), Update (Edit Details), and Delete (Remove Item) operations on the inventory database.
+* **FR-ADMIN-02 (Constraint Validation):** For all Create/Update operations, the system shall enforce data integrity rules (e.g., preventing empty names, ensuring prices are numeric, and preventing negative stock quantities) before committing data to the database.
+* **FR-ADMIN-03 (Confirmation Protocols):** The system shall trigger a modal-based confirmation dialog for all "Delete" operations to prevent accidental data loss, requiring an explicit user action to proceed.
+* **FR-ADMIN-04 (Audit Logging):** The system shall automatically log every `POST`, `PUT`, or `DELETE` request, recording the `Administrator ID`, `Timestamp`, `Action Taken`, and `Target Item ID` into a non-editable system audit table.
+
+---
+
+### 3.3 · Non-Functional Requirements (NFR)
+
+These define the system attributes and constraints that ensure quality, security, and performance.
+
+#### 3.3.1 · Security
+* **NFR-SEC-01 (Data Encryption):** All passwords must be stored using a salted, one-way cryptographic hashing algorithm (Argon2 or Bcrypt). Plaintext storage is strictly prohibited.
+* **NFR-SEC-02 (Communication Security):** All data in transit between the client-side browser and the backend server must be encrypted using TLS 1.3 (HTTPS).
+* **NFR-SEC-03 (Authorization Middleware):** Every sensitive endpoint must be protected by a role-validation middleware; if a user attempts to access an `/admin` route without an `admin` role, the system must return a 403 Forbidden status.
+
+#### 3.3.2 · Performance & Reliability
+* **NFR-PERF-01 (Latency):** The inventory list must load within 500ms for up to 10,000 records. Filtering operations must execute within 100ms of input to ensure a seamless "instant" feel.
+* **NFR-PERF-02 (Availability):** The system must maintain 99.9% uptime during operational business hours, with maintenance windows communicated 24 hours in advance.
+
+#### 3.3.3 · Usability & Quality
+* **NFR-USAB-01 (Compatibility):** The dashboard must be fully responsive, supporting full functionality on Chrome, Firefox, Edge, and Safari browsers without layout breakage.
+* **NFR-USAB-02 (Accessibility):** The interface must meet WCAG 2.1 AA standards, ensuring that all action buttons (Edit, Delete, Export) are keyboard-navigable and screen-reader compatible.
+
+---
+
+## § 04 · Verification & Dependencies
+
+### Verification Table
+
+| Requirement | Verification Method | Acceptance Criteria |
+| :--- | :--- | :--- |
+| **FR-AUTH-03** | Test (Positive) | User is redirected to `/user-inventory-view` and cannot manually navigate to `/admin`. |
+| **FR-USER-02** | Test (Dynamic) | Inputting "Keyboard" in search filters the list to only items with "Keyboard" in the name. |
+| **FR-ADMIN-01** | Demonstration | Admin adds an item; item appears in the list without refreshing the page. |
+| **NFR-SEC-03** | Test (Negative) | Attempting to `POST` to `/api/admin/delete` with a User-role JWT results in a 403 Error. |
+
+### System Dependencies
+* **Backend API:** Must expose standard CRUD endpoints (`GET /items`, `POST /items`, `PUT /items/:id`, `DELETE /items/:id`).
+* **Database:** A relational database (e.g., PostgreSQL or MySQL) with `Users` and `Inventory` tables linked by foreign key relationships.
+* **Environment:** Access to an environment variable server to store sensitive `JWT_SECRET` keys.
+* **Browser:** Modern browser environment supporting ES6+ JavaScript and Fetch API.
+
+
